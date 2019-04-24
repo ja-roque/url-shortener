@@ -6,7 +6,11 @@ class UrlCheckerController < ApplicationController
   def create_short_url
     long_url  = params['url']
     short_url = generate_short_hash
-    new_url = Url.create({long_url: long_url, short_url: short_url}) if long_url =~ URI::regexp
+
+    if long_url =~ URI::regexp
+      new_url = Url.create({long_url: long_url, short_url: short_url})
+      new_url.update({short_url: new_url.id.to_s(36)}) #Added update to make sure it is the shortest & unique hash everytime.
+    end
 
     if new_url.present?
       render json: { short_url: new_url.short_url }, status: 201
