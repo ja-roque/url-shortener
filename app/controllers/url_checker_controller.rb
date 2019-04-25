@@ -29,6 +29,7 @@ class UrlCheckerController < ApplicationController
     found_url = Url.find_by_short_url( params[:short_hash] )
 
     if found_url
+      found_url.update({ hits: found_url.hits.to_i + 1 })
       render json: { long_url: found_url.long_url }, status: 200
     else
       render json: "Url not found", status: 404
