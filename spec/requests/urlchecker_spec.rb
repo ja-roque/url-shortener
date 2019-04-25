@@ -5,7 +5,7 @@ RSpec.describe 'Url shortener API', type: :request do
   let!(:url) { create_list(:url, 10) }
   let(:url_id) { url.first.short_url }
 
-  # Test suite for GET /short_hash
+  # Test suite for GET /:short_hash
   describe 'GET /:short_hash' do
     # make HTTP get request before each example
     before { get "/#{url_id}" }
@@ -20,7 +20,7 @@ RSpec.describe 'Url shortener API', type: :request do
       expect(response).to have_http_status(200)
     end
 
-    context 'when the short has doesn\'t exist' do
+    context 'when the short hash doesn\'t exist' do
       before { get "/#{SecureRandom.hex( 3 )}" }
 
       it 'returns status code 404' do
