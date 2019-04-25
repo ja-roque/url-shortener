@@ -10,10 +10,11 @@ class UrlCheckerController < ApplicationController
 
     if long_url =~ URI::regexp
       new_url = Url.create({long_url: long_url, short_url: short_url})
-      new_url.update({short_url: new_url.id.to_s(36)}) #Added update to make sure it is the shortest & unique hash everytime.
+      new_url.update({short_url: "#{new_url.id.to_s(36)}#{SecureRandom.hex(1)}"  } ) #Added update to make sure it is the shortest & unique hash every time.
     end
 
     if new_url.present?
+      TitleCrawlerWorker.perform_async(new_url.id.to_s, new_url.long_url)
       render json: { short_url: new_url.short_url }, status: 201
     else
       render json: "Validation failed: Url must be a valid long url", status: 422
