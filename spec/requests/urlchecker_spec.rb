@@ -41,7 +41,7 @@ RSpec.describe 'Url shortener API', type: :request do
     context 'When the records exist' do
       it 'returns the urls' do
         expect(json).not_to be_empty
-        expect(json['top_100']).not_to be_empty
+        expect(json['top_100']).to be_instance_of(Array)
       end
 
       it 'returns status code 200' do
