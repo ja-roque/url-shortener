@@ -26,3 +26,5 @@ This API was testing driven developed using RSpec, every method developed has it
 
 As suggested, the database chosen for this scenario is a Postgresql simply for convienience as this is my database of choice for quick development projects.
 
+The chosen deployment hosting was: Heroku free dyno with heroku's free RedisToGo to run sidekiq's background job of updating the title of url.
+
