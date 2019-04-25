@@ -1,6 +1,7 @@
 class UrlCheckerController < ApplicationController
   def top100
-    render json: {'top_100': %w( one two three four fivee )}, status: 200
+    top100 = Url.where('hits > ?', 0).order("hits DESC").limit(100).pluck(:short_url, :hits)
+    render json: {'top_100': top100 }, status: 200
   end
 
   def create_short_url
